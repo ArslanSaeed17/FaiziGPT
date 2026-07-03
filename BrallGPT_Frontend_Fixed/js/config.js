@@ -1,5 +1,5 @@
 const CONFIG = {
-  API_BASE: "http://localhost:8000"
+  API_BASE: "https://faizigpt-production.up.railway.app"
 };
 
 // For deployment, change API_BASE to your Railway backend URL:
