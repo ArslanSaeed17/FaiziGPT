@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup - BrallGPT</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-card">
+    <a class="logo center" href="../index.html">Brall<span>GPT</span></a>
+    <h1>Create account</h1>
+    <p>Start your free BrallGPT workspace.</p>
+
+    <form id="signupForm" class="auth-form">
+      <label>Full Name</label>
+      <input type="text" id="fullName" required placeholder="Your name" />
+
+      <label>Email</label>
+      <input type="email" id="email" required placeholder="you@example.com" />
+
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="Minimum 6 characters" />
+
+      <button type="submit" class="btn primary full">Create Account</button>
+      <div id="authMessage" class="form-message"></div>
+    </form>
+
+    <p class="auth-link">Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Install with: pip install -r requirements-dev.txt --break-system-packages
+# These are only needed to run tests/ locally — not required on Railway.
+respx==0.22.0

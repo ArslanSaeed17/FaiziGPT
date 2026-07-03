@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chat - BrallGPT</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <a class="logo dash-logo" href="dashboard.html">Brall<span>GPT</span></a>
+        <p class="sidebar-subtitle">AI Student Platform</p>
+      </div>
+
+      <nav class="side-nav">
+        <a href="dashboard.html" data-nav="dashboard">Dashboard</a>
+        <a href="chat.html" data-nav="chat">AI Chat</a>
+        <a href="tools.html" data-nav="tools">AI Tools</a>
+        <a href="saved-chats.html" data-nav="saved">Saved Chats</a>
+        <a href="pricing.html" data-nav="pricing">Pricing</a>
+        <a href="profile.html" data-nav="profile">Profile</a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h1>AI Chat</h1>
+          <p>Ask BrallGPT anything or select a focused tool.</p>
+        </div>
+      </header>
+
+      <section class="chat-layout">
+        <aside class="chat-sidebar">
+          <h3>Chat History</h3>
+          <div id="historyList" class="history-list">Loading...</div>
+        </aside>
+
+        <section class="chat-panel">
+          <div class="chat-controls">
+            <select id="toolSelect">
+              <option value="general">General Assistant</option>
+              <option value="study">StudyGPT</option>
+              <option value="code">CodeGPT</option>
+              <option value="cyber">CyberGPT</option>
+              <option value="business">BusinessGPT</option>
+              <option value="resume">ResumeGPT</option>
+              <option value="project">ProjectGPT</option>
+              <option value="career">CareerGPT</option>
+            </select>
+            <button id="newChatBtn" class="btn-mini">New Chat</button>
+          </div>
+
+          <div id="messages" class="messages">
+            <div class="empty-state">
+              <h3>Start a conversation</h3>
+              <p>Example: Give me a business idea with Rs. 50,000 budget.</p>
+            </div>
+          </div>
+
+          <form id="chatForm" class="chat-form">
+            <input id="messageInput" type="text" placeholder="Message BrallGPT..." required />
+            <button type="submit">Send</button>
+          </form>
+        </section>
+      </section>
+
+    </main>
+  </div>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

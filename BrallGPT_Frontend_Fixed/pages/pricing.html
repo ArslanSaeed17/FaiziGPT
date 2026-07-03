@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - BrallGPT</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <a class="logo dash-logo" href="dashboard.html">Brall<span>GPT</span></a>
+        <p class="sidebar-subtitle">AI Student Platform</p>
+      </div>
+
+      <nav class="side-nav">
+        <a href="dashboard.html" data-nav="dashboard">Dashboard</a>
+        <a href="chat.html" data-nav="chat">AI Chat</a>
+        <a href="tools.html" data-nav="tools">AI Tools</a>
+        <a href="saved-chats.html" data-nav="saved">Saved Chats</a>
+        <a href="pricing.html" data-nav="pricing">Pricing</a>
+        <a href="profile.html" data-nav="profile">Profile</a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h1>Pricing</h1>
+          <p>Start free. Upgrade when you need more power.</p>
+        </div>
+      </header>
+
+      <section class="pricing-grid">
+        <div class="price-card">
+          <h2>Free</h2>
+          <p class="price">Rs. 0</p>
+          <ul>
+            <li>20 questions/day</li>
+            <li>Basic AI tools</li>
+            <li>Chat history</li>
+          </ul>
+          <button class="upgrade-btn">Current Plan</button>
+        </div>
+
+        <div class="price-card featured">
+          <h2>Premium</h2>
+          <p class="price">Rs. 999/month</p>
+          <ul>
+            <li>Unlimited questions</li>
+            <li>PDF and file tools</li>
+            <li>Business project builder</li>
+            <li>Advanced cyber and coding help</li>
+          </ul>
+          <button class="upgrade-btn">Upgrade Soon</button>
+        </div>
+
+        <div class="price-card">
+          <h2>Institute</h2>
+          <p class="price">Custom</p>
+          <ul>
+            <li>For schools and academies</li>
+            <li>Admin dashboard</li>
+            <li>Student accounts</li>
+          </ul>
+          <button class="upgrade-btn">Contact</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

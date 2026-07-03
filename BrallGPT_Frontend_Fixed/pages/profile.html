@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - BrallGPT</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <a class="logo dash-logo" href="dashboard.html">Brall<span>GPT</span></a>
+        <p class="sidebar-subtitle">AI Student Platform</p>
+      </div>
+
+      <nav class="side-nav">
+        <a href="dashboard.html" data-nav="dashboard">Dashboard</a>
+        <a href="chat.html" data-nav="chat">AI Chat</a>
+        <a href="tools.html" data-nav="tools">AI Tools</a>
+        <a href="saved-chats.html" data-nav="saved">Saved Chats</a>
+        <a href="pricing.html" data-nav="pricing">Pricing</a>
+        <a href="profile.html" data-nav="profile">Profile</a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h1>Profile</h1>
+          <p>Manage your account details.</p>
+        </div>
+      </header>
+
+      <section class="profile-grid">
+        <div class="profile-card">
+          <h2>Account</h2>
+          <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+          <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
+          <p><strong>Plan:</strong> <span id="profilePlan">Free Plan</span></p>
+        </div>
+
+        <div class="profile-card">
+          <h2>Usage</h2>
+          <p><strong>Daily limit:</strong> 20 questions</p>
+          <p><strong>Used today:</strong> <span id="profileUsage">0</span></p>
+          <a class="upgrade-btn" href="pricing.html">Upgrade Plan</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
