@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # --- CORS ---
     # Comma-separated list of allowed frontend origins
-    ALLOWED_ORIGINS: str = http://localhost:5500,http://127.0.0.1:550"
+    ALLOWED_ORIGINS: str = "http://localhost:5500,http://127.0.0.1:550"
 
     # --- Supabase ---
     SUPABASE_URL: str
