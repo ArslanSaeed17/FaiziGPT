@@ -138,7 +138,12 @@ function setupChat() {
       loadingBubble.textContent = data.reply || data.response || "No response received.";
       if (data.chat_id) activeChatId = data.chat_id;
 
-      incrementUsage();
+      if (typeof data.daily_questions_used === "number") {
+        setText("usedQuestions", data.daily_questions_used);
+        setText("profileUsage", data.daily_questions_used);
+      } else {
+        incrementUsage();
+      }
       await loadChatHistory();
     } catch (error) {
       loadingBubble.classList.add("error-message");
