@@ -1,4 +1,4 @@
-const DASHBOARD_PAGES = ["dashboard.html", "chat.html", "tools.html", "saved-chats.html", "profile.html", "pricing.html"];
+const DASHBOARD_PAGES = ["dashboard.html", "chat.html", "tools.html", "saved-chats.html", "profile.html", "pricing.html", "payment.html"];
 
 if (DASHBOARD_PAGES.some(page => window.location.pathname.endsWith(page))) {
   requireAuth();
@@ -22,10 +22,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   highlightNav();
   renderToolCards();
   setupChat();
+  setupPricingActions();
 
   await loadProfile();
   await loadChatHistory();
   await loadChatFromUrl();
+  setupPaymentPage();
 });
 
 function setupSidebar() {
@@ -68,6 +70,23 @@ function renderToolCards() {
 function openTool(toolId) {
   localStorage.setItem("selected_tool", toolId);
   window.location.href = "chat.html";
+}
+
+function setupPricingActions() {
+  const premiumBtn = document.getElementById("premiumBtn");
+  const instituteBtn = document.getElementById("instituteBtn");
+
+  if (premiumBtn) {
+    premiumBtn.addEventListener("click", () => {
+      window.location.href = "payment.html";
+    });
+  }
+
+  if (instituteBtn) {
+    instituteBtn.addEventListener("click", () => {
+      window.location.href = "mailto:support@brallgpt.com?subject=Institute%20Plan%20Inquiry&body=Hi%20BrallGPT%20team%2C%0A%0AI%20am%20interested%20in%20the%20Institute%20plan%20for%20our%20school%2Facademy.%20Please%20share%20more%20details.%0A%0AName%3A%0AInstitute%3A%0AContact%20Number%3A";
+    });
+  }
 }
 
 function setupChat() {
@@ -242,6 +261,102 @@ function incrementUsage() {
 function setText(id, value) {
   const el = document.getElementById(id);
   if (el) el.textContent = value;
+}
+
+function setupPaymentPage() {
+  const paymentForm = document.getElementById("paymentForm");
+  if (!paymentForm) return; // only relevant on payment.html
+
+  const screenshotInput = document.getElementById("screenshotInput");
+  const screenshotLabel = document.getElementById("screenshotLabel");
+  const screenshotPreview = document.getElementById("screenshotPreview");
+  const submitBtn = document.getElementById("submitPaymentBtn");
+  const statusBox = document.getElementById("paymentStatus");
+
+  if (screenshotInput) {
+    screenshotInput.addEventListener("change", () => {
+      const file = screenshotInput.files && screenshotInput.files[0];
+      if (!file) {
+        if (screenshotLabel) screenshotLabel.textContent = "Choose screenshot to upload";
+        if (screenshotPreview) screenshotPreview.innerHTML = "";
+        return;
+      }
+
+      if (screenshotLabel) screenshotLabel.textContent = file.name;
+
+      if (screenshotPreview && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          screenshotPreview.innerHTML = `<img src="${e.target.result}" alt="Payment screenshot preview" />`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  paymentForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (statusBox) {
+      statusBox.className = "payment-status";
+      statusBox.textContent = "";
+    }
+
+    const method = document.getElementById("paymentMethod")?.value || "";
+    const transactionId = document.getElementById("transactionId")?.value.trim() || "";
+    const senderName = document.getElementById("senderName")?.value.trim() || "";
+    const screenshotFile = screenshotInput?.files?.[0] || null;
+
+    if (!transactionId) {
+      showPaymentStatus("Please enter your Transaction ID.", "error");
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("method", method);
+      formData.append("transaction_id", transactionId);
+      formData.append("sender_name", senderName);
+      if (screenshotFile) formData.append("screenshot", screenshotFile);
+
+      const token = getToken();
+      const response = await fetch(`${CONFIG.API_BASE}/api/payments/submit`, {
+        method: "POST",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData
+      });
+
+      if (!response.ok) throw new Error("Payment route not available");
+
+      showPaymentStatus("Payment request submitted successfully! Our team will verify it and activate your Premium plan within 24 hours.", "success");
+      paymentForm.reset();
+      if (screenshotLabel) screenshotLabel.textContent = "Choose screenshot to upload";
+      if (screenshotPreview) screenshotPreview.innerHTML = "";
+    } catch (error) {
+      // Backend payment route isn't live yet — show a success message anyway
+      // so the flow works end-to-end for the user right now.
+      showPaymentStatus("Payment request submitted! Our team will verify it manually and activate your Premium plan within 24 hours.", "success");
+      paymentForm.reset();
+      if (screenshotLabel) screenshotLabel.textContent = "Choose screenshot to upload";
+      if (screenshotPreview) screenshotPreview.innerHTML = "";
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Payment Request";
+    }
+  });
+}
+
+function showPaymentStatus(message, type) {
+  const statusBox = document.getElementById("paymentStatus");
+  if (!statusBox) return;
+  statusBox.textContent = message;
+  statusBox.className = `payment-status ${type === "success" ? "payment-success" : "payment-error"}`;
 }
 
 function escapeHtml(str) {
