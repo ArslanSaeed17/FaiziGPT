@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from app.models.schemas import ChatMessageRequest, ChatMessageResponse
 from app.core.deps import get_current_user
-from app.services import chat_service
+from app.services import chat_service, user_service
 from app.services.ai_service import generate_ai_reply
 
 router = APIRouter(prefix="/api/chat", tags=["Chat"])
@@ -10,6 +10,10 @@ router = APIRouter(prefix="/api/chat", tags=["Chat"])
 @router.post("", response_model=ChatMessageResponse)
 async def chat(payload: ChatMessageRequest, current_user: dict = Depends(get_current_user)):
     user_id = current_user["id"]
+
+    # Enforce the free-plan daily limit and persist the increment up front,
+    # so a page refresh reflects the real usage instead of resetting to 0.
+    usage = user_service.increment_daily_usage(user_id, current_user.get("plan", "free"))
 
     if payload.chat_id:
         chat_row = chat_service.get_chat(payload.chat_id, user_id)
@@ -30,4 +34,5 @@ async def chat(payload: ChatMessageRequest, current_user: dict = Depends(get_cur
         chat_id=chat_row["id"],
         reply=reply,
         created_at=saved_reply["created_at"],
+        daily_questions_used=usage,
     )
