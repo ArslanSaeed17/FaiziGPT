@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade to Premium - BrallGPT</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <a class="logo dash-logo" href="dashboard.html">Brall<span>GPT</span></a>
+        <p class="sidebar-subtitle">AI Student Platform</p>
+      </div>
+
+      <nav class="side-nav">
+        <a href="dashboard.html" data-nav="dashboard">Dashboard</a>
+        <a href="chat.html" data-nav="chat">AI Chat</a>
+        <a href="tools.html" data-nav="tools">AI Tools</a>
+        <a href="saved-chats.html" data-nav="saved">Saved Chats</a>
+        <a href="pricing.html" data-nav="pricing">Pricing</a>
+        <a href="profile.html" data-nav="profile">Profile</a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h1>Upgrade to Premium</h1>
+          <p>Pay manually via JazzCash or EasyPaisa and submit your details below.</p>
+        </div>
+      </header>
+
+      <a class="back-link" href="pricing.html">&larr; Back to Pricing</a>
+
+      <section class="payment-layout">
+        <div class="panel payment-summary">
+          <h2>Premium Plan</h2>
+          <p class="price">Rs. 999/month</p>
+          <ul>
+            <li>Unlimited questions</li>
+            <li>PDF and file tools</li>
+            <li>Business project builder</li>
+            <li>Advanced cyber and coding help</li>
+          </ul>
+
+          <div class="payment-methods">
+            <div class="payment-method-card">
+              <h4>JazzCash</h4>
+              <p>Send Rs. 999 to the number below via JazzCash Mobile Account.</p>
+              <p class="account-number">0300-1234567</p>
+              <p>Account Title: Faizi Brall</p>
+            </div>
+
+            <div class="payment-method-card">
+              <h4>EasyPaisa</h4>
+              <p>Send Rs. 999 to the number below via EasyPaisa Mobile Account.</p>
+              <p class="account-number">0301-7654321</p>
+              <p>Account Title: Faizi Brall</p>
+            </div>
+          </div>
+
+          <div class="payment-note">
+            After sending the payment, fill in the Transaction ID and upload a screenshot of the payment confirmation. Our team will manually verify your payment and activate your Premium plan within 24 hours.
+          </div>
+        </div>
+
+        <div class="panel payment-form-panel">
+          <h2 style="margin-bottom:18px;">Submit Payment Request</h2>
+
+          <form id="paymentForm">
+            <div class="payment-form-group">
+              <label for="paymentMethod">Payment Method</label>
+              <select id="paymentMethod" required>
+                <option value="JazzCash">JazzCash</option>
+                <option value="EasyPaisa">EasyPaisa</option>
+              </select>
+            </div>
+
+            <div class="payment-form-group">
+              <label for="senderName">Sender Name</label>
+              <input type="text" id="senderName" placeholder="Name on the sending account" />
+            </div>
+
+            <div class="payment-form-group">
+              <label for="transactionId">Transaction ID *</label>
+              <input type="text" id="transactionId" placeholder="e.g. TXN123456789" required />
+            </div>
+
+            <div class="payment-form-group">
+              <label for="screenshotInput">Payment Screenshot</label>
+              <div class="file-upload">
+                <input type="file" id="screenshotInput" accept="image/*" />
+                <div class="file-upload-box" id="screenshotLabel">Choose screenshot to upload</div>
+              </div>
+              <div class="screenshot-preview" id="screenshotPreview"></div>
+            </div>
+
+            <button type="submit" class="upgrade-btn btn-block" id="submitPaymentBtn">Submit Payment Request</button>
+
+            <div class="payment-status" id="paymentStatus"></div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
