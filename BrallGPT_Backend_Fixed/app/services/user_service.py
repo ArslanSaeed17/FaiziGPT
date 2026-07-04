@@ -12,6 +12,7 @@ from app.core.security import (
 )
 
 RESET_TOKEN_TTL_MINUTES = 30
+FREE_PLAN_DAILY_LIMIT = 20
 
 
 def get_user_by_email(email: str) -> dict | None:
@@ -72,6 +73,51 @@ def public_user(user: dict) -> dict:
         "daily_questions_used": user.get("daily_questions_used", 0),
         "created_at": user.get("created_at"),
     }
+
+
+def increment_daily_usage(user_id: str, plan: str) -> int:
+    """
+    Increments and persists a user's daily question counter.
+
+    This is the piece that was previously missing: the frontend showed a
+    running total, but nothing ever wrote the increment back to Supabase,
+    so a page refresh always showed 0/20 again. The counter now resets
+    automatically whenever `last_usage_date` isn't today, and free-plan
+    users are blocked once they hit FREE_PLAN_DAILY_LIMIT for the day.
+    Premium/other paid plans are treated as unlimited.
+
+    Returns the updated daily_questions_used count.
+    Raises HTTPException(429) if a free-plan user is over today's limit.
+    """
+    supabase = get_supabase()
+    today = datetime.now(timezone.utc).date().isoformat()
+
+    result = supabase.table("users").select("daily_questions_used, last_usage_date").eq("id", user_id).execute()
+    if not result.data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    row = result.data[0]
+    used = row.get("daily_questions_used") or 0
+    last_date = row.get("last_usage_date")
+
+    # New day (or first ever question) -> reset the counter.
+    if last_date != today:
+        used = 0
+
+    if plan == "free" and used >= FREE_PLAN_DAILY_LIMIT:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Daily free limit reached ({FREE_PLAN_DAILY_LIMIT} questions). Upgrade to Premium for unlimited access.",
+        )
+
+    used += 1
+
+    supabase.table("users").update({
+        "daily_questions_used": used,
+        "last_usage_date": today,
+    }).eq("id", user_id).execute()
+
+    return used
 
 
 # ---------- Password reset ----------
