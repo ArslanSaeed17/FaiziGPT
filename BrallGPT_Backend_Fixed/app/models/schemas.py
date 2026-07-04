@@ -51,6 +51,7 @@ class ChatMessageResponse(BaseModel):
     chat_id: str
     reply: str
     created_at: datetime
+    daily_questions_used: Optional[int] = None
 
 
 # ---------- History ----------
